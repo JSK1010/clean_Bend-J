@@ -14,6 +14,8 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const fileUpload = require('express-fileupload');
 app.use(fileUpload());
+const PORT = process.env.PORT || 3030;
+
 /////////////
 
 const signup = require("./routes/signup");
@@ -50,8 +52,8 @@ app.use("/warning", warning)
 app.use("/getcolor", color)
 app.use("/finalized", finalized)
 
-app.listen(5000,function(){
- console.log("Server is up and running");
-});
+app.listen(PORT, () => {
+    console.log(`server started on port ${PORT}`);
+  });
 
 
