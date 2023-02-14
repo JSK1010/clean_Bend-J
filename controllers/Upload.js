@@ -112,7 +112,7 @@ exports.reupload = async (req, res) => {
             console.log(req.files.file);
             const file=req.files.file;
             if(file.name.endsWith('pdf')){
-            file.mv(`${__dirname}/uploads/${user}.pdf`,err =>{
+            file.mv(`uploads/${user}.pdf`,err =>{
           
               if (err) {
                 console.error(err);
