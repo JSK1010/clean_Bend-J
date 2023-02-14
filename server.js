@@ -35,7 +35,7 @@ const finalized= require("./routes/finalized");
 
 /////////////
 const database = require("./keys/keys");
-mongoose.connect(database,{ useNewUrlParser: true });
+mongoose.connect("mongodb+srv://Jayasrikrishna:SRIjanaki1@cluster0.fz7ntml.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true,useUnifiedTopology: true,});
 /////////////
 
 app.use("/check",check);
