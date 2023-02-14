@@ -7,7 +7,9 @@ app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(express.json());
 const cors = require("cors");
-app.use(cors());
+app.use(cors({
+  origin: '*'
+}));
 const fs = require('fs');
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')

@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 require("dotenv").config();
 
 
+
 exports.comments = async (req, res) => {
         const token = req.headers['x-access-token']
         let decision;
@@ -111,7 +112,7 @@ exports.reupload = async (req, res) => {
             console.log(req.files.file);
             const file=req.files.file;
             if(file.name.endsWith('pdf')){
-            file.mv(`/uploads/${user}.pdf`,err =>{
+            file.mv(`${__dirname}/uploads/${user}.pdf`,err =>{
           
               if (err) {
                 console.error(err);
