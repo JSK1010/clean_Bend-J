@@ -116,7 +116,7 @@ exports.reupload = async (req, res) => {
           
               if (err) {
                 console.error(err);
-                return res.status(500).send(err);
+                return res.json({error:500});
               }
           
               revision=''
@@ -135,12 +135,12 @@ exports.reupload = async (req, res) => {
           
           
             else{
-              return res.status(600).send('error');
+              return res.json({error:600});
             }
           }
           catch(err){
             console.log(err)
-           return res.status(700).send('error');
+            return res.json({error:700});
           }
           
         
