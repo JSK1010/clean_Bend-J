@@ -101,3 +101,7 @@ exports.admin_signup = async (req, res) => {
       }
 
 }    
+
+exports.check = async (req, res) => {
+  return res.json({status:'up and running'});
+}

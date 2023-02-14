@@ -2,7 +2,7 @@ const fs = require('fs');
 const Cred_vit = require("../models/creds");
 const jwt = require('jsonwebtoken')
 
-exports.getpdf = (req, res) => {
+exports.getpdf = async (req, res) => {
 
     const ff=req.params.id
      try {
