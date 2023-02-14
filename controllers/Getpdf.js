@@ -1,6 +1,8 @@
 const fs = require('fs');
 const Cred_vit = require("../models/creds");
 const jwt = require('jsonwebtoken')
+require("dotenv").config();
+
 
 exports.getpdf = async (req, res) => {
 
@@ -37,6 +39,7 @@ exports.infos = async(req, res) => {
       const Affiliation=[]
       const Paper_Title=[]
       const Domain=[]
+      const filess=[]
       
     try {
       const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
@@ -51,9 +54,9 @@ exports.infos = async(req, res) => {
        })
   
        console.log(news.length)
-       news.forEach(async (e)=>{
+       news.forEach((e)=>{
         console.log(e)
-        await Cred_vit.findOne({email: e},function(err,docs){
+       Cred_vit.findOne({email: e},function(err,docs){
           if(err){
     console.log('error');
            }
@@ -68,12 +71,13 @@ exports.infos = async(req, res) => {
   Affiliation.push(docs.Affiliation);
   Paper_Title.push(docs.Paper_Title);
   Domain.push(docs.Domain);
+  filess.push(docs.email);
   
   
   console.log(Author_Name.length,news.length)
   if(Author_Name.length==news.length){
     console.log('sent')
-  res.json({status:'ok',file:news,Author_Name:Author_Name,Author_Type:Author_Type,Institution:Institution,Address:Address,Mobile:Mobile,IEEE_No:IEEE_no,Coauthors:Coauthors,Affiliation:Affiliation,Paper_Title:Paper_Title,Domain:Domain})
+  res.json({status:'ok',file:filess,Author_Name:Author_Name,Author_Type:Author_Type,Institution:Institution,Address:Address,Mobile:Mobile,IEEE_No:IEEE_no,Coauthors:Coauthors,Affiliation:Affiliation,Paper_Title:Paper_Title,Domain:Domain})
   }
   }
         });

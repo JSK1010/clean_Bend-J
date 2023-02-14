@@ -1,6 +1,7 @@
 const Cred_vit = require("../models/creds");
 const jwt = require('jsonwebtoken')
 const cors = require("cors");
+require("dotenv").config();
 
 exports.validation = async (req, res) => {
 

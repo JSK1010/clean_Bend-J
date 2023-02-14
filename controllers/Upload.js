@@ -1,6 +1,6 @@
 const Cred_vit = require("../models/creds");
 const jwt = require('jsonwebtoken')
-
+require("dotenv").config();
 
 
 exports.comments = async (req, res) => {

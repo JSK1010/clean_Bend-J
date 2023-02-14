@@ -1,7 +1,7 @@
 const Cred_vit = require("../models/creds");
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
-
+require("dotenv").config();
 
 
 exports.done_signup = async (req, res) => {
