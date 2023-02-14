@@ -38,7 +38,7 @@ const database = require("./keys/keys");
 console.log(database)
 mongoose.set("strictQuery", false);
 
-mongoose.connect(database,{ useNewUrlParser: true,useUnifiedTopology: true,});
+mongoose.connect("mongodb+srv://Jayasrikrishna:SRIjanaki1@cluster0.fz7ntml.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true,useUnifiedTopology: true,});
 /////////////
 
 app.use("/check",check);
