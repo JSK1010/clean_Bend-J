@@ -51,9 +51,9 @@ exports.infos = async(req, res) => {
        })
   
        console.log(news.length)
-       news.forEach((e)=>{
+       news.forEach(async (e)=>{
         console.log(e)
-        Cred_vit.findOne({email: e},function(err,docs){
+        await Cred_vit.findOne({email: e},function(err,docs){
           if(err){
     console.log('error');
            }
