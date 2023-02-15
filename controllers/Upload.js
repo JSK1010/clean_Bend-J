@@ -136,7 +136,7 @@ exports.reupload = async (req, res) => {
           
             else{
               console.log("NOT A PDF")
-              res.status(600).send('error');
+              res.json({error:"not a pdf returned"})
                    
             }
           }
