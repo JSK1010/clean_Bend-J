@@ -116,7 +116,7 @@ exports.reupload = async (req, res) => {
           
               if (err) {
                 console.error(err);
-                return res.status(500).send(err);
+                return res.json({error:500})
               }
           
               revision=''
@@ -136,13 +136,13 @@ exports.reupload = async (req, res) => {
           
             else{
               console.log("NOT A PDF")
-              res.json({error:"not a pdf returned"})
+              res.json({error:600})
                    
             }
           }
           catch(err){
             console.log(err)
-           res.status(700).send('error');
+            res.json({error:700})
           }
           
         
