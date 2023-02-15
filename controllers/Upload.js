@@ -62,7 +62,7 @@ exports.upload_details = (req, res) => {
         
         
           if(req.files===null){
-            return res.status(400).json({msg:'no file uploaded'});
+            return res.json({msg:'no file uploaded'});
           }
           console.log(req.files.file);
           const file=req.files.file;
@@ -72,7 +72,7 @@ exports.upload_details = (req, res) => {
         
             if (err) {
               console.error(err);
-              return res.status(500).send(err);
+              return res.json({error:500})
             }
         
             Cred_vit.updateOne({email:user}, {$set:{ Author_Name:Author_Name,Author_Type:Author_Type,Institution:Institution,Address:Address,Mobile:Mobile,IEEE_No:IEEE_No,Coauthors:Coauthors,Affiliation:Affiliation,Paper_Title:Title,Domain:Domain,Waiting:'B',Warning:'Will be updated shortly',Revision:'Not yet Reviewed'},$unset:{Decision:1}},err=>{
@@ -90,7 +90,7 @@ exports.upload_details = (req, res) => {
         
         
           else{
-            return res.status(600).send('error');
+            res.json({error:600})
           }
         };      
 
@@ -107,7 +107,7 @@ exports.reupload = async (req, res) => {
            saved=false;
            const user=JSON.parse(JSON.stringify(req.body.user));
             if(req.files===null){
-              return res.status(400).json({msg:'no file uploaded'});
+              return res.json({msg:'no file uploaded'});
             }
             console.log(req.files.file);
             const file=req.files.file;
