@@ -1,6 +1,7 @@
 const Cred_vit = require("../models/creds");
 const jwt = require('jsonwebtoken')
 require("dotenv").config();
+const emails = require('../services/Email');
 
 
 
@@ -36,6 +37,9 @@ exports.decision = async (req, res) => {
               try {
                 fs.unlinkSync(path);
                 console.log("File removed:", path);
+                let subject='Your paper has been rejected for some reasons'
+                let text='You can visit you login page to know more about the reason\nYou can now submit a new paper'
+                emails.verifyUserEmail(userchange,subject,text)
                 return res.json({status:'ok'});
               } catch (err) {
                 console.error(err);
@@ -71,6 +75,9 @@ exports.warning = async (req, res) => {
                   console.log(err);
                 }
                 else{
+                  let subject='You paper needs to be modified'
+                  let text='The paper is accepted with some revision, visit you account to know more about the revision'
+                  emails.verifyUserEmail(userchange,subject,text)
                   return res.json({status:'ok'});
                 }
               });
@@ -137,6 +144,9 @@ exports.finalized = async (req, res) => {
               console.log(err);
             }
             else{
+              let subject='Your paper is accepted without any further revision'
+              let text='you can see the details in your login page.'
+              emails.verifyUserEmail(userchange,subject,text)
               return res.json({status:'ok'});
             }
           });

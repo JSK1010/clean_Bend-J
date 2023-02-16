@@ -4,6 +4,8 @@ const jwt = require('jsonwebtoken')
 require("dotenv").config();
 
 
+
+
 exports.done_signup = async (req, res) => {
 
     if(req.body.password.length<=7){
@@ -61,9 +63,12 @@ exports.done_signin = async (req, res) => {
 			},
 			process.env.CLIENT_SECRET,{ expiresIn: '600000' }
 		)
-
+    
+     
+    
 		return res.json({ status: 'ok', user: token })
     }
+
     else{
       res.json({ status: 'wrong password',user:false});
     }
@@ -94,6 +99,7 @@ exports.admin_signup = async (req, res) => {
         process.env.CLIENT_SECRET,{ expiresIn: '600000' }
       )
       console.log(user)
+          
       return res.json({ status: 'ok', user: token })
       }
       else{

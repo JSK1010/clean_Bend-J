@@ -1,6 +1,7 @@
 const Cred_vit = require("../models/creds");
 const jwt = require('jsonwebtoken')
 require("dotenv").config();
+const emails = require('../services/Email');
 
 
 
@@ -42,7 +43,7 @@ exports.comments = async (req, res) => {
       }
  
 
-exports.upload_details = (req, res) => {
+exports.upload_details = async(req, res) => {
 
         const Author_Name=JSON.parse(JSON.stringify(req.body.Author_Name));
         const Author_Type=JSON.parse(JSON.stringify(req.body.Author_Type));
@@ -74,8 +75,9 @@ exports.upload_details = (req, res) => {
               console.error(err);
               return res.json({error:500})
             }
-        
-            Cred_vit.updateOne({email:user}, {$set:{ Author_Name:Author_Name,Author_Type:Author_Type,Institution:Institution,Address:Address,Mobile:Mobile,IEEE_No:IEEE_No,Coauthors:Coauthors,Affiliation:Affiliation,Paper_Title:Title,Domain:Domain,Waiting:'B',Warning:'Will be updated shortly',Revision:'Not yet Reviewed'},$unset:{Decision:1}},err=>{
+            
+           
+           Cred_vit.updateOne({email:user}, {$set:{ Author_Name:Author_Name,Author_Type:Author_Type,Institution:Institution,Address:Address,Mobile:Mobile,IEEE_No:IEEE_No,Coauthors:Coauthors,Affiliation:Affiliation,Paper_Title:Title,Domain:Domain,Waiting:'B',Warning:'Will be updated shortly',Revision:'Not yet Reviewed'},$unset:{Decision:1}},err=>{
               if(err){
                 console.log(err);
               }
@@ -83,6 +85,9 @@ exports.upload_details = (req, res) => {
                 saved=true
               }
             });
+            let text='Your paper has been received successfully, Kindly wait for the further revisions \nYou will receive mail regarding this shortly.'
+            let subject='Thank you for submitting the paper.'
+            emails.verifyUserEmail(user,subject,text)
             res.json({ fileName: file.name, filePath: `/uploads/${file.name}`,Saved_in_monogdb:saved });
         
           });
@@ -128,6 +133,9 @@ exports.reupload = async (req, res) => {
                   saved=true
                 }
               });
+              let subject='Your modified paper has been received successfully'
+              let text='Your paper will be reviewed shortly.\nYou will be receiving a mail regarding the review shorly'
+              emails.verifyUserEmail(user,subject,text)
               res.json({ fileName: file.name, filePath: `/uploads/${file.name}`,Saved_in_monogdb:saved });
           
             });
