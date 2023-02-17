@@ -2,7 +2,8 @@ const Cred_vit = require("../models/creds");
 const jwt = require('jsonwebtoken')
 require("dotenv").config();
 const emails = require('../services/Email');
-
+const tokencontinue=require('../Middleware/tokencontinue')
+const tokenadmin=require('../Middleware/tokenadmin')
 
 
 
@@ -15,10 +16,17 @@ exports.decision = async (req, res) => {
         const rev=req.headers['body']
         const revision = JSON.parse(rev)
         try {
-          const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
-          const email = decoded.username
-          const user = await Cred_vit.findOne({ email: email })
-          if(user){
+          // const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
+          // const email = decoded.username
+          // const user = await Cred_vit.findOne({ email: email })
+
+          let user= await tokencontinue.tokencontinue(req,res);
+          
+          if(!user){
+             throw 'Invalid Tokensss'
+          }
+
+          else{
             
               d=false;
               console.log('trying to delete')
@@ -66,10 +74,13 @@ exports.warning = async (req, res) => {
           const token = req.headers['x-access-token']
           const userchange=req.headers['user']
           try {
-            const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
-            const email = decoded.username
-            const user = await Cred_vit.findOne({ email: email })
-            if(user){
+            let user= await tokencontinue.tokencontinue(req,res);
+          
+            if(!user){
+               throw 'Invalid Tokensss'
+            }
+      
+                else{
               Cred_vit.updateOne({email:userchange}, {$set:{Warning:warning,Revision:revision,Decision:d,Waiting:color}},err=>{
                 if(err){
                   console.log(err);
@@ -100,10 +111,13 @@ exports.color = async (req, res) => {
     const token = req.headers['x-access-token']
     const userchange=req.headers['user']
     try {
-      const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
-      const email = decoded.username
-      const user = await Cred_vit.findOne({ email: email })
-      if(user){
+      let user= await tokencontinue.tokencontinue(req,res);
+          
+      if(!user){
+         throw 'Invalid Tokensss'
+      }
+
+          else{
         try{
         const nuser = await Cred_vit.findOne({ email: userchange })
         if(nuser.Waiting){
@@ -130,13 +144,16 @@ exports.color = async (req, res) => {
   }
   
 exports.finalized = async (req, res) => {
-      const token = req.headers['x-access-token']
+    
       const userchange=req.headers['user']
       try {
-        const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
-        const email = decoded.username
-        const user = await Cred_vit.findOne({ email: email })
-        if(user){
+        let user= await tokencontinue.tokencontinue(req,res);
+          
+          if(!user){
+             throw 'Invalid Tokensss'
+          }
+  
+            else{
           try{
     
           Cred_vit.updateOne({email:userchange}, {$set:{Warning:'None',Waiting:'G',Decision:true,Revision:'No revisions Required'}},err=>{

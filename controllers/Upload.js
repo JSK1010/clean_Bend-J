@@ -2,20 +2,22 @@ const Cred_vit = require("../models/creds");
 const jwt = require('jsonwebtoken')
 require("dotenv").config();
 const emails = require('../services/Email');
-
+const tokencontinue=require('../Middleware/tokencontinue')
 
 
 exports.comments = async (req, res) => {
-        const token = req.headers['x-access-token']
         let decision;
         let waiting;
         let revision='Not yet Reviewed';
         let warning='Will be updated shortly';
       
         try {
-          const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
-          const email = decoded.username
-          const user = await Cred_vit.findOne({ email: email })
+          let user= await tokencontinue.tokencontinue(req,res);
+          
+          if(!user){
+             throw 'Invalid Tokensss'
+          }
+         
           
           if(user.Decision==true){
    decision=true;
@@ -44,7 +46,11 @@ exports.comments = async (req, res) => {
  
 
 exports.upload_details = async(req, res) => {
-
+  try{
+  let a=tokencontinue.tokencontinue(req,res);
+    if(!a){
+throw 'Invalid Token'
+    }
         const Author_Name=JSON.parse(JSON.stringify(req.body.Author_Name));
         const Author_Type=JSON.parse(JSON.stringify(req.body.Author_Type));
         const Institution=JSON.parse(JSON.stringify(req.body.Institution));
@@ -97,16 +103,22 @@ exports.upload_details = async(req, res) => {
           else{
             res.json({error:600})
           }
+        }
+        catch(err){
+          console.log(err);
+          res.json({error:600})
+        }
         };      
 
 exports.reupload = async (req, res) => {        
 
-          let revision;
-          const token = req.headers['x-access-token']
+        
           try {
-            const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
-            const email = decoded.username
-            const User = await Cred_vit.findOne({ email: email })
+            let a= await tokencontinue.tokencontinue(req,res);
+          
+            if(!a){
+               throw 'Invalid Tokensss'
+            }
         
         
            saved=false;
