@@ -5,7 +5,7 @@ require("dotenv").config();
 
 exports.done_signup = async (req, res) => {
 
-  if(!req.body.username || !req.body.password){
+  if (!req.body.username || !req.body.password) {
     return res.json({ status: 'Fill all the details' });
   }
 

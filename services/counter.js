@@ -2,16 +2,20 @@ const tracks = require("../models/tracks");
 
 
 module.exports = {
-    counter:async function counter(){ 
+    counter:async function counter(Domain){ 
 
-    await tracks.updateOne({count:'tracks'},{$inc:{"SES" : 1}},function(docs,err){
-    if(!err){
-      console.log('updated')
-      return docs.SES
+    await tracks.findOneAndUpdate({name:Domain},{$inc:{count : 1}},function (data, err) 
+    { if(!err){
+      var count=data.count
+      return count
     }
     else{
-        console.log(err)
-    }
-  })
+
+      console.log(err)
+        return 0
+    }});
+    
+   
+ 
 }
 }

@@ -38,6 +38,7 @@ const decision = require("./routes/decision");
 const warning = require("./routes/warning");
 const color = require("./routes/color");
 const finalized = require("./routes/finalized");
+const mypdfinfo= require("./routes/mypdfinfo");
 
 app.use("/check", check);
 app.use("/done_signup", signup);
@@ -56,6 +57,7 @@ app.use("/paper_decision/false", decision)
 app.use("/warning", warning)
 app.use("/getcolor", color)
 app.use("/finalized", finalized)
+app.use("/mypdfinfo", mypdfinfo)
 
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);

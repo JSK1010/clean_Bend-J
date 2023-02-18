@@ -21,6 +21,7 @@ const signSchema = new mongoose.Schema({
     Affiliation: String,
     Paper_Title: String,
     Domain: String,
+    pdfid:String,
     Decision: Boolean,
     Warning: String,
     Waiting: String,             /* R-rejected G-Accepted O-Waiting_for_change B->changes made */
