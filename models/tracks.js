@@ -1,14 +1,9 @@
 const mongoose = require("mongoose");
 
 const trackSchema = new mongoose.Schema({
+    name:{type: String},
+    count:{type: Number}
     
-    SES:{type: Number},
-    NGWCT:{type: Number},
-    AWN:{type: Number},
-    SARF:{type: Number},
-    SIP:{type: Number},
-    ACISS:{type: Number},
-    WIE:{type: Number}
     });
     
     

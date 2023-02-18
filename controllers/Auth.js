@@ -5,7 +5,6 @@ require("dotenv").config();
 
 
 
-
 exports.done_signup = async (req, res) => {
 
     if(req.body.password.length<=7){
@@ -65,7 +64,7 @@ exports.done_signin = async (req, res) => {
 		)
     
      
-    
+   
 		return res.json({ status: 'ok', user: token })
     }
 
@@ -109,5 +108,5 @@ exports.admin_signup = async (req, res) => {
 }    
 
 exports.check = async (req, res) => {
-  return res.json({status:'up and running'});
+   return res.json({status:a});
 }

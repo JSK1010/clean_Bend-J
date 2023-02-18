@@ -8,4 +8,4 @@ exports.validation = async (req, res) => {
 
     token.token(req,res);
     
-  }
+}

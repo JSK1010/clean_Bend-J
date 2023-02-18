@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const signSchema = new mongoose.Schema({
     admin:Boolean,
-    
+
         email:String, 
         password:String,
         Author_Name:String,
@@ -16,6 +16,7 @@ const signSchema = new mongoose.Schema({
         Paper_Title:String,
         Domain:String,  
         Decision:Boolean,
+        pdfid:String,
         Warning:String,
         Waiting:String,             /* R-rejected G-Accepted O-Waiting_for_change B->changes made */
         Revision:String,  /* USED TILL NOW */

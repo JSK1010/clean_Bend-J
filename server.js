@@ -33,13 +33,13 @@ const decision= require("./routes/decision");
 const warning= require("./routes/warning");
 const color= require("./routes/color");
 const finalized= require("./routes/finalized");
+const mypdfinfo= require("./routes/mypdfinfo");
 
 
 /////////////
 const database = require("./keys/keys");
 console.log(database)
 mongoose.set("strictQuery", false);
-
 mongoose.connect("mongodb+srv://Jayasrikrishna:SRIjanaki1@cluster0.fz7ntml.mongodb.net/?retryWrites=true&w=majority",{ useNewUrlParser: true,useUnifiedTopology: true,});
 /////////////
 
@@ -57,6 +57,7 @@ app.use("/paper_decision/false", decision)
 app.use("/warning", warning)
 app.use("/getcolor", color)
 app.use("/finalized", finalized)
+app.use("/mypdfinfo", mypdfinfo)
 
 app.listen(PORT, () => {
     console.log(`server started on port ${PORT}`);
