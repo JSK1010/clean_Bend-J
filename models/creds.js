@@ -9,7 +9,6 @@ const signSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: [true, 'Please add a password'],
     },
     Author_Name: String,
     Author_Type: String,

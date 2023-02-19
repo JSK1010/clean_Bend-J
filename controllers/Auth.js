@@ -3,6 +3,10 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 require("dotenv").config();
 
+
+
+
+
 exports.done_signup = async (req, res) => {
 
   if (!req.body.username || !req.body.password) {
@@ -100,6 +104,9 @@ exports.admin_signup = async (req, res) => {
   }
 
 }
+
+
+
 
 exports.check = async (req, res) => {
   return res.json({ status: 'up and running' });

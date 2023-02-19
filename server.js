@@ -39,6 +39,10 @@ const warning = require("./routes/warning");
 const color = require("./routes/color");
 const finalized = require("./routes/finalized");
 const mypdfinfo= require("./routes/mypdfinfo");
+const paperapi = require("./routes/paperapi");
+const verifygenerator = require("./routes/verifygen");
+const verify = require("./routes/verify");
+
 
 app.use("/check", check);
 app.use("/done_signup", signup);
@@ -58,6 +62,9 @@ app.use("/warning", warning)
 app.use("/getcolor", color)
 app.use("/finalized", finalized)
 app.use("/mypdfinfo", mypdfinfo)
+app.use("/paperapi", paperapi)
+app.use("/verifygenerator", verifygenerator)
+app.use("/verify", verify)
 
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);
