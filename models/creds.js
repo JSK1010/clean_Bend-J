@@ -10,6 +10,8 @@ const signSchema = new mongoose.Schema({
     password: {
         type: String,
     },
+    isverified: { type: Boolean, default: false },
+    verificationCode: { type: String, required: true },
     Author_Name: String,
     Author_Type: String,
     Institution: String,
@@ -20,7 +22,7 @@ const signSchema = new mongoose.Schema({
     Affiliation: String,
     Paper_Title: String,
     Domain: String,
-    pdfid:String,
+    pdfid: String,
     Decision: Boolean,
     Warning: String,
     Waiting: String,             /* R-rejected G-Accepted O-Waiting_for_change B->changes made */

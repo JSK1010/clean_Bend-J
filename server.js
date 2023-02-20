@@ -10,8 +10,8 @@ connectDB();
 const app = express();
 
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json({ limit: "30mb", extended: true }));
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 
 app.use(cors({
   origin: '*'
@@ -38,14 +38,15 @@ const decision = require("./routes/decision");
 const warning = require("./routes/warning");
 const color = require("./routes/color");
 const finalized = require("./routes/finalized");
-const mypdfinfo= require("./routes/mypdfinfo");
+const mypdfinfo = require("./routes/mypdfinfo");
 const paperapi = require("./routes/paperapi");
 const verifygenerator = require("./routes/verifygen");
 const verify = require("./routes/verify");
+const forgotPassword = require("./routes/forgotPassword");
 
 
 app.use("/check", check);
-app.use("/done_signup", signup);
+// app.use("/done_signup", signup);
 app.use("/done_signin", signin);
 app.use("/done_signin_admin", signin_admin)
 
@@ -65,6 +66,7 @@ app.use("/mypdfinfo", mypdfinfo)
 app.use("/paperapi", paperapi)
 app.use("/verifygenerator", verifygenerator)
 app.use("/verify", verify)
+app.use("/forgotPassword", forgotPassword);
 
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);

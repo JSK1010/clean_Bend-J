@@ -4,7 +4,7 @@ const router = express.Router();
 
 const {verify} = require("../controllers/verify");
 
-router.get("/:id", verify);
+router.get("/", verify);
 
 module.exports = router;
 
