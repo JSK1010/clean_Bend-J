@@ -10,7 +10,7 @@ const tokenadmin=require('../Middleware/tokenadmin')
 
 exports.decision = async (req, res) => {
     
- ``
+
         const token = req.headers['x-access-token']
         const userchange=req.headers['user']
         const rev=req.headers['body']
@@ -111,7 +111,7 @@ exports.color = async (req, res) => {
     const token = req.headers['x-access-token']
     const userchange=req.headers['user']
     try {
-      let user= await tokencontinue.tokencontinue(req,res);
+      let user= await tokenadmin.tokenadmin(req,res);
           
       if(!user){
          throw 'Invalid Tokensss'

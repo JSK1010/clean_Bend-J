@@ -9,7 +9,7 @@ module.exports = {
       const token = req.headers['x-access-token']
       const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
       const email = decoded.username
-      const user = await Cred_vit.findOne({ email: email })
+      const user = await Cred_vit.findOne({ email: email,isverified:true })
       console.log(user);
 
       return res.json({ status: 'ok', who: user })
