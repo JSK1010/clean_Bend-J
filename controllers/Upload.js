@@ -63,7 +63,7 @@ exports.upload_details = async (req, res) => {
     const Title = JSON.parse(JSON.stringify(req.body.Paper_Title));
     const Domain = JSON.parse(JSON.stringify(req.body.Domain));
     const user = JSON.parse(JSON.stringify(req.body.user));
-
+var countinc=1
     var pdfnum = 0
 
     saved = false;
@@ -76,17 +76,39 @@ exports.upload_details = async (req, res) => {
     console.log(req.files.file);
     const file = req.files.file;
     if (file.name.endsWith('pdf')) {
-      await tracks.findOneAndUpdate({ name: Domain }, { $inc: { count: 1 } }).then(function (data, err) {
+      await Cred_vit.findOne({email:user, Paper_Title:{ $ne: null }}).then(function(data,err){
+        if(data==null){
+         countinc=1
+        }
+        else{
+          countinc=0
+        }
+      })
+      await tracks.findOneAndUpdate({ name: Domain }, { $inc: { count: countinc } }).then(function (data, err) {
         if (!err) {
-          pdfnum = data.count
-
+          console.log(data)
         }
         else {
 
           console.log(err)
 
         }
+
       });
+
+      await tracks.findOne({ name: Domain }).then(function (data, err) {
+        if (!err) {
+          pdfnum=data.count
+        }
+        else {
+
+          console.log(err)
+
+        }
+
+      });
+
+
       file.mv(`uploads/${Domain}${pdfnum}.pdf`, err => {
 
         if (err) {
