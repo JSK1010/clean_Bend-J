@@ -7,6 +7,7 @@ const emails = require('../services/Email');
 
 exports.newPassword = async (req, res) => {
   const { otp, password } = req.body;
+  console.log(otp)
   try {
     if (!otp || !password) {
       return res.json({ status: 'Fill all the details' });
@@ -23,11 +24,11 @@ exports.newPassword = async (req, res) => {
 
         user.password = hashedPassword;
         await user.save();
-        res.status(201).send('New password is set!');
+        res.status(201).send({status :'New password is set!'});
     }
 
     else{
-        res.status(404).send('Wrong OTP or user not found');
+        res.status(404).send({status:'Wrong OTP or user not found'});
     }
   }
   catch (err) {

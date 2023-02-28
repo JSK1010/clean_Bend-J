@@ -19,13 +19,13 @@ exports.forgotPasswordEmail = async (req, res) => {
 
         const oldUser = await Cred_vit.findOne({ email });
 
-        if (!oldUser) return res.status(400).json({ message: "User does not exist" });
+        if (!oldUser) return res.status(400).json({ status: "User does not exist" });
 
         oldUser.recentotp = verificationCode;
         await oldUser.save();
 
         let subject = 'Forgot Password'
-        let text = `Your OTP is : ${verificationCode}.`
+        let text = `Your OTP is : ${verificationCode}`
 
         emails.verifyUserEmail(email, subject, text) 
         return res.json({ status: 'ok', msg: 'Mail sent' })
