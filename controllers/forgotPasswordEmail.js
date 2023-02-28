@@ -27,8 +27,7 @@ exports.forgotPasswordEmail = async (req, res) => {
         await oldUser.save();
 
         let subject = 'Forgot Password'
-        let text = `Your OTP is : ${verificationCode}
-      Thanks`
+        let text = `Your OTP is : ${verificationCode}.`
 
         emails.verifyUserEmail(email, subject, text) //create a recent otp option in the schema and then use that for checking the otp and password
         return res.json({ status: 'ok', msg: 'Mail sent' })

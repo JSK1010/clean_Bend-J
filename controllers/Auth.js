@@ -53,7 +53,7 @@ exports.done_signin = async (req, res) => {
     return res.json({ status: 'no user found' });
   }
 
-  if(!user.isverified){
+  if (!user.isverified) {
     return res.status(404).send({ message: 'User not verified' });
   }
 

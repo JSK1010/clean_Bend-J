@@ -5,21 +5,18 @@ require("dotenv").config();
 
 
 module.exports = {
-    tokenadmin: async function tokenadmin(req,res) {
+  tokenadmin: async function tokenadmin(req, res) {
+    try {
+      const token = req.headers['x-access-token']
+      const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
+      const email = decoded.username
+      const user = await Cred_vit.findOne({ email: email, admin: true })
+      console.log(user);
 
-
-    
-try {
-  const token = req.headers['x-access-token']
-  const decoded =  jwt.verify(token, process.env.CLIENT_SECRET)
-  const email = decoded.username
-  const user = await Cred_vit.findOne({ email: email,admin:true })
- console.log(user);
- 
-  return user;
-} catch (error) {
-  console.log(error)
-  return 0;
-}
+      return user;
+    } catch (error) {
+      console.log(error)
+      return 0;
     }
+  }
 }
