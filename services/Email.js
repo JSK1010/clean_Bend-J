@@ -2,9 +2,6 @@ var dotenv = require("dotenv")
 dotenv.config()
 const nodemailer = require("nodemailer");
 
-
-//transporter setup
-
 let transporter = nodemailer.createTransport({
     service: 'Gmail',
     host: 'smtp.gmail.com',
@@ -15,8 +12,6 @@ let transporter = nodemailer.createTransport({
         pass: process.env.EMAIL_TEST_APP_PSWD
     },
 })
-
-///
 
 module.exports = {
     verifyUserEmail: async function verifyUserEmail(userEmail, s, t) {

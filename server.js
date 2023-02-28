@@ -22,9 +22,8 @@ const fs = require('fs');
 const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
-/////////////
+
 const check = require("./routes/check");
-const signup = require("./routes/signup");
 const signin = require("./routes/signin");
 const signin_admin = require("./routes/signin_admin");
 
@@ -47,7 +46,6 @@ const newPassword = require("./routes/newPassword");
 
 
 app.use("/check", check);
-// app.use("/done_signup", signup);
 app.use("/done_signin", signin);
 app.use("/done_signin_admin", signin_admin)
 

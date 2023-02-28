@@ -9,9 +9,7 @@ function generateVerificationCode() {
 }
 
 exports.forgotPasswordEmail = async (req, res) => {
-    console.log(req.body);
     const { email } = req.body;
-    console.log(email);
     const verificationCode = generateVerificationCode();
 
     try {
@@ -29,7 +27,7 @@ exports.forgotPasswordEmail = async (req, res) => {
         let subject = 'Forgot Password'
         let text = `Your OTP is : ${verificationCode}.`
 
-        emails.verifyUserEmail(email, subject, text) //create a recent otp option in the schema and then use that for checking the otp and password
+        emails.verifyUserEmail(email, subject, text) 
         return res.json({ status: 'ok', msg: 'Mail sent' })
     }
     catch (err) {

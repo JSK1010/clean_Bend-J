@@ -63,7 +63,7 @@ exports.upload_details = async (req, res) => {
     const Title = JSON.parse(JSON.stringify(req.body.Paper_Title));
     const Domain = JSON.parse(JSON.stringify(req.body.Domain));
     const user = JSON.parse(JSON.stringify(req.body.user));
-var countinc=1
+    var countinc = 1
     var pdfnum = 0
 
     saved = false;
@@ -76,12 +76,12 @@ var countinc=1
     console.log(req.files.file);
     const file = req.files.file;
     if (file.name.endsWith('pdf')) {
-      await Cred_vit.findOne({email:user, Paper_Title:{ $ne: null }}).then(function(data,err){
-        if(data==null){
-         countinc=1
+      await Cred_vit.findOne({ email: user, Paper_Title: { $ne: null } }).then(function (data, err) {
+        if (data == null) {
+          countinc = 1
         }
-        else{
-          countinc=0
+        else {
+          countinc = 0
         }
       })
       await tracks.findOneAndUpdate({ name: Domain }, { $inc: { count: countinc } }).then(function (data, err) {
@@ -98,7 +98,7 @@ var countinc=1
 
       await tracks.findOne({ name: Domain }).then(function (data, err) {
         if (!err) {
-          pdfnum=data.count
+          pdfnum = data.count
         }
         else {
 
