@@ -42,7 +42,8 @@ const mypdfinfo = require("./routes/mypdfinfo");
 const paperapi = require("./routes/paperapi");
 const verifygenerator = require("./routes/verifygen");
 const verify = require("./routes/verify");
-const forgotPassword = require("./routes/forgotPassword");
+const forgotPasswordEmail = require("./routes/forgotPasswordEmail");
+const newPassword = require("./routes/newPassword");
 
 
 app.use("/check", check);
@@ -64,9 +65,12 @@ app.use("/getcolor", color)
 app.use("/finalized", finalized)
 app.use("/mypdfinfo", mypdfinfo)
 app.use("/paperapi", paperapi)
+
 app.use("/verifygenerator", verifygenerator)
 app.use("/verify", verify)
-app.use("/forgotPassword", forgotPassword);
+app.use("/forgotPasswordEmail", forgotPasswordEmail);
+app.use("/newPassword", newPassword);
+
 
 app.listen(PORT, () => {
   console.log(`server started on port ${PORT}`);

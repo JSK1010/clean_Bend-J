@@ -12,6 +12,7 @@ const signSchema = new mongoose.Schema({
     },
     isverified: { type: Boolean, default: false },
     verificationCode: { type: String, required: true },
+    recentotp: String,
     Author_Name: String,
     Author_Type: String,
     Institution: String,
