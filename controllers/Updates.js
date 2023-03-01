@@ -16,9 +16,8 @@ exports.decision = async (req, res) => {
   const rev = req.headers['body']
   const revision = JSON.parse(rev)
   try {
-    // const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
-    // const email = decoded.username
-    // const user = await Cred_vit.findOne({ email: email })
+    var id=0;
+    var domain='';
 
     let user = await tokencontinue.tokencontinue(req, res);
 
@@ -30,7 +29,13 @@ exports.decision = async (req, res) => {
 
       d = false;
       console.log('trying to delete')
-      Cred_vit.updateOne({ email: userchange }, { $unset: { Author_Name: 1, Author_Type: 1, Institution: 1, Address: 1, Mobile: 1, IEEE_No: 1, Coauthors: 1, Affiliation: 1, Paper_Title: 1, Domain: 1 }, $set: { Revision: revision, Waiting: '', Warning: 'R', Decision: false } }, err => {
+      await Cred_vit.findOne({ email: userchange }).then(function(data){
+        if(data){
+          domain=data.Domain;
+          id=data.pdfid;
+        }
+      })
+      await Cred_vit.updateOne({ email: userchange }, { $unset: { Author_Name: 1, Author_Type: 1, Institution: 1, Address: 1, Mobile: 1, IEEE_No: 1, Coauthors: 1, Affiliation: 1, Paper_Title: 1, Domain: 1,pdfid:1 }, $set: { Revision: revision, Waiting: '', Warning: 'R', Decision: false } }).then(function(data,err){
         if (err) {
           console.log(err);
         }
@@ -38,10 +43,11 @@ exports.decision = async (req, res) => {
           console.log("deleted");
         }
       });
+      
       const fs = require("fs");
       const { dirname } = require('path');
       const appDir = dirname(require.main.filename);
-      const path = appDir + "/uploads/" + userchange + '.pdf';
+      const path = appDir + "/uploads/" + domain+id + '.pdf';
       try {
         fs.unlinkSync(path);
         console.log("File removed:", path);
@@ -81,7 +87,7 @@ exports.warning = async (req, res) => {
     }
 
     else {
-      Cred_vit.updateOne({ email: userchange }, { $set: { Warning: warning, Revision: revision, Decision: d, Waiting: color } }, err => {
+     await Cred_vit.updateOne({ email: userchange }, { $set: { Warning: warning, Revision: revision, Decision: d, Waiting: color } }).then(function(data,err){
         if (err) {
           console.log(err);
         }

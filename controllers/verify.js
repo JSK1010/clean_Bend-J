@@ -36,8 +36,7 @@ exports.verifygenerator = async (req, res) => {
     // console.log(token);
 
     let subject = 'Verify You Vitecon account'
-    let text = `Hi! There, You have recently visited our website and entered your email. Please follow the given link to verify your email
-              http://localhost:5000/verify?code=${result.verificationCode}
+    let text = `Hi! There, You have recently visited our website and entered your email. Please follow the given link to verify your email${process.env.backend}/verify?code=${result.verificationCode}
     Thanks`
 
     emails.verifyUserEmail(email, subject, text)
