@@ -6,9 +6,9 @@ const mongoose = require('mongoose');
 const connectDB = async () => {
     try {
         mongoose.set("strictQuery", false);
-        
-    const a=process.env.MONGODB_URI.toString()
-       await mongoose.connect("mongodb+srv://Jayasrikrishna:SRIjanaki1@cluster0.fz7ntml.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true});
+        const conn = await mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+        console.log(`Mongo DB connected ${conn.connection.host}`)
     } catch (error) {
         console.log(error);
         process.exit(1)
