@@ -8,9 +8,7 @@ const connectDB = async () => {
         mongoose.set("strictQuery", false);
         
     const a=process.env.MONGODB_URI.toString()
-       await mongoose.connect(a, { useNewUrlParser: true});
-
-      //console.log(`Mongo DB connected ${conn.connection.host}`)
+       await mongoose.connect("mongodb+srv://Jayasrikrishna:SRIjanaki1@cluster0.fz7ntml.mongodb.net/?retryWrites=true&w=majority", { useNewUrlParser: true});
     } catch (error) {
         console.log(error);
         process.exit(1)

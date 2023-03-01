@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 require("dotenv").config();
 
 exports.done_signin = async (req, res) => {
-  try{
+
   const user = await Cred_vit.findOne({
     email: req.body.username,
     admin: false
@@ -36,10 +36,8 @@ exports.done_signin = async (req, res) => {
     res.json({ status: 'wrong password', user: false });
   }
 }
-catch{
-  console.log('timeout')
-}
-}
+
+
 
 exports.admin_signup = async (req, res) => {
   const user = await Cred_vit.findOne({
