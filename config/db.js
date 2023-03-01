@@ -8,7 +8,7 @@ const connectDB = async () => {
         mongoose.set("strictQuery", false);
         
     console.log(process.env.MONGODB_URI.toString())
-        const conn = await mongoose.connect(process.env.MONGODB_URI.toString());
+      mongoose.connect(process.env.MONGODB_URI.toString(), { useNewUrlParser: true});
 
         console.log(`Mongo DB connected ${conn.connection.host}`)
     } catch (error) {
