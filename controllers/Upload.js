@@ -82,6 +82,17 @@ exports.upload_details = async (req, res) => {
         }
         else {
           countinc = 0
+          const fs = require("fs");
+          const { dirname } = require('path');
+          const appDir = dirname(require.main.filename);
+          const path = appDir + "/uploads/" + data.Domain+data.pdfid + '.pdf';
+          try {
+            fs.unlinkSync(path);
+            console.log("File removed:", path);
+          }
+          catch{
+           return res.json({ error: 600 })
+          }
         }
       })
       await tracks.findOneAndUpdate({ name: Domain }, { $inc: { count: countinc } }).then(function (data, err) {
