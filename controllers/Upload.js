@@ -137,7 +137,11 @@ exports.upload_details = async (req, res) => {
           }
         });
 
-        let text = 'Your paper has been received successfully, Kindly wait for the further revisions \nYou will receive mail regarding this shortly.'
+        let text = `Dear ${Author_Name},
+Your manuscript entitled "${Title}" has been successfully submitted online and is presently being given full consideration for review in IEEE 2nd International Conference   ViTECoN- 2023.
+Your manuscript number is "${Domain}${pdfnum}".  Please mention this number in all future correspondence regarding this submission.
+       
+You can view the status of your manuscript at any time by checking using the following link "https://vitecon.vit.ac.in/".  If you have difficulty using this site, please  mail to convenor.vitecon@vit.ac.in,  convenor.vitecon@gmail.com`
         let subject = 'Thank you for submitting the paper.'
         emails.verifyUserEmail(user, subject, text)
         res.json({ fileName: file.name, filePath: `/uploads/${file.name}`, Saved_in_monogdb: saved });
@@ -163,6 +167,8 @@ exports.reupload = async (req, res) => {
   const token = req.headers['x-access-token']
   const decoded = jwt.verify(token, process.env.CLIENT_SECRET)
   const email = decoded.username
+  var Author_Name;
+  var Paper_Title;
   try {
     let a = await tokencontinue.tokencontinue(req, res);
 
@@ -185,6 +191,10 @@ exports.reupload = async (req, res) => {
           console.log(docs, email)
           dom = docs.Domain
           num = docs.pdfid
+          Author_Name=docs.Author_Name;
+          Paper_Title=docs.Paper_Title;
+        
+  
           file.mv(`uploads/${docs.Domain}${docs.pdfid}.pdf`, err => {
 
             if (err) {
@@ -202,7 +212,14 @@ exports.reupload = async (req, res) => {
               }
             });
             let subject = 'Your modified paper has been received successfully'
-            let text = 'Your paper will be reviewed shortly.\nYou will be receiving a mail regarding the review shorly'
+            let text = `Dear ${Author_Name},
+Your manuscript entitled "${Paper_Title}" has been successfully submitted online and is presently being given full consideration for review in IEEE 2nd International Conference   ViTECoN- 2023.
+Your manuscript number is "${dom}${num}".  Please mention this number in all future correspondence regarding this submission.
+Thank you.
+
+
+You can view the status of your manuscript at any time by checking using the following link "https://vitecon.vit.ac.in/".  If you have difficulty using this site, please  mail to convenor.vitecon@vit.ac.in,  convenor.vitecon@gmail.com`
+
             emails.verifyUserEmail(user, subject, text)
             res.json({ fileName: file.name, filePath: `/uploads/${file.name}`, Saved_in_monogdb: saved });
 

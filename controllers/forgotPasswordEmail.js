@@ -25,7 +25,13 @@ exports.forgotPasswordEmail = async (req, res) => {
         await oldUser.save();
 
         let subject = 'Forgot Password'
-        let text = `Your OTP is : ${verificationCode}`
+        let text = `Dear Vitecon User,
+
+Your OTP is : ${verificationCode}
+       
+If you have difficulty using this site, please  mail to convenor.vitecon@vit.ac.in,  convenor.vitecon@gmail.com. 
+Thank you.`
+        
 
         emails.verifyUserEmail(email, subject, text) 
         return res.json({ status: 'ok', msg: 'Mail sent' })

@@ -35,9 +35,17 @@ exports.verifygenerator = async (req, res) => {
 
     // console.log(token);
 
-    let subject = 'Verify You Vitecon account'
-    let text = `Hi! There, You have recently visited our website and entered your email. Please follow the given link to verify your email${process.env.backend}/verify?code=${result.verificationCode}
-    Thanks`
+    let subject = ' Welcome to IEEE 2nd International Conference on Vitecon'
+    let text = `
+Dear Author,
+    
+We are excited to welcome you to the IEEE 2nd International Conference on Vitecon.
+Verify your account by clicking on the link below.
+${process.env.backend}/verify?code=${result.verificationCode}
+
+
+If you have difficulty using this site, please  mail to convenor.vitecon@vit.ac.in,  convenor.vitecon@gmail.com. 
+Thank you.`
 
     emails.verifyUserEmail(email, subject, text)
     return res.json({ status: 'ok', msg: 'Signed up successfully. Please verify your email address.' })

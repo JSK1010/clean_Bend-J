@@ -11,6 +11,10 @@ const tokenadmin = require('../Middleware/tokenadmin')
 exports.decision = async (req, res) => {
 
 
+  var Author_Name;
+  var Paper_Title;
+  var domain;
+  var id;
   const token = req.headers['x-access-token']
   const userchange = req.headers['user']
   const rev = req.headers['body']
@@ -31,8 +35,12 @@ exports.decision = async (req, res) => {
       console.log('trying to delete')
       await Cred_vit.findOne({ email: userchange }).then(function(data){
         if(data){
-          domain=data.Domain;
-          id=data.pdfid;
+         
+              Author_Name=data.Author_Name;
+              Paper_Title=data.Paper_Title;
+              domain=data.Domain;
+              id=data.pdfid; 
+      
         }
       })
       await Cred_vit.updateOne({ email: userchange }, { $unset: { Author_Name: 1, Author_Type: 1, Institution: 1, Address: 1, Mobile: 1, IEEE_No: 1, Coauthors: 1, Affiliation: 1, Paper_Title: 1, Domain: 1,pdfid:1 }, $set: { Revision: revision, Waiting: '', Warning: 'R', Decision: false } }).then(function(data,err){
@@ -52,7 +60,14 @@ exports.decision = async (req, res) => {
         fs.unlinkSync(path);
         console.log("File removed:", path);
         let subject = 'Your paper has been rejected for some reasons'
-        let text = 'You can visit you login page to know more about the reason\nYou can now submit a new paper'
+        let text = `Dear ${Author_Name},
+Manuscript ID  "${domain+id}" entitled "${Paper_Title}" which you submitted to IEEE 2nd International Conference   ViTECoN- 2023  has been reviewed.             
+A revised version of your manuscript that takes into account the comments of the referee(s) will be reconsidered for publication.      
+The comments of the referee(s) are included in the following link, You can upload your revised manuscript and submit it through "https://vitecon.vit.ac.in/".                                                                                                  
+Once again, thank you for submitting your manuscript to IEEE 2nd International Conference   ViTECoN- 2023  and I look forward to receiving your revision.                                                 
+       
+If you have difficulty using this site, please  mail to convenor.vitecon@vit.ac.in,  convenor.vitecon@gmail.com. 
+Thank you.`
         emails.verifyUserEmail(userchange, subject, text)
         return res.json({ status: 'ok' });
       } catch (err) {
@@ -71,6 +86,10 @@ exports.decision = async (req, res) => {
   }
 }
 exports.warning = async (req, res) => {
+  var Author_Name;
+  var Paper_Title;
+  var domain;
+  var id;
   const warning = req.params.id;
 
   const rev = req.headers['body']
@@ -87,13 +106,29 @@ exports.warning = async (req, res) => {
     }
 
     else {
+     await Cred_vit.findOne({ email: userchange }).then(function(data){
+      if(data){
+        Author_Name=data.Author_Name;
+        Paper_Title=data.Paper_Title;
+        domain=data.Domain;
+        id=data.pdfid; 
+
+      }
+     })
      await Cred_vit.updateOne({ email: userchange }, { $set: { Warning: warning, Revision: revision, Decision: d, Waiting: color } }).then(function(data,err){
         if (err) {
           console.log(err);
         }
         else {
-          let subject = 'You paper needs to be modified'
-          let text = 'The paper is accepted with some revision, visit you account to know more about the revision'
+          let subject = 'You paper got Revised!'
+          let text = `Dear ${Author_Name},
+          Manuscript ID  "${domain}${id}" entitled "${Paper_Title}" which you submitted to IEEE 2nd International Conference ViTECoN- 2023  has been reviewed.             
+A revised version of your manuscript that takes into account the comments of the referee(s) will be reconsidered for publication.      
+The comments of the referee(s) are included in the following link, You can upload your revised manuscript and submit it through "https://vitecon.vit.ac.in/".                                                                                                   
+Once again, thank you for submitting your manuscript to IEEE 2nd International Conference   ViTECoN- 2023  and I look forward to receiving your revision.                                                 
+          
+If you have difficulty using this site, please  mail to convenor.vitecon@vit.ac.in,  convenor.vitecon@gmail.com. 
+Thank you`
           emails.verifyUserEmail(userchange, subject, text)
           return res.json({ status: 'ok' });
         }
@@ -151,7 +186,10 @@ exports.color = async (req, res) => {
 }
 
 exports.finalized = async (req, res) => {
-
+  var Author_Name;
+  var Paper_Title;
+  var domain;
+  var id;
   const userchange = req.headers['user']
   try {
     let user = await tokencontinue.tokencontinue(req, res);
@@ -163,13 +201,28 @@ exports.finalized = async (req, res) => {
     else {
       try {
 
+        await Cred_vit.findOne({ email: userchange }).then(function(data){
+          if(data){
+            Author_Name=data.Author_Name;
+            Paper_Title=data.Paper_Title;
+            domain=data.Domain;
+            id=data.pdfid; 
+    
+          }
+         })
         Cred_vit.updateOne({ email: userchange }, { $set: { Warning: 'None', Waiting: 'G', Decision: true, Revision: 'No revisions Required' } }, err => {
           if (err) {
             console.log(err);
           }
           else {
-            let subject = 'Your paper is accepted without any further revision'
-            let text = 'you can see the details in your login page.'
+            let subject = 'Your paper is accepted!'
+            let text = `Dear ${Author_Name},
+Manuscript ID  "${domain}${id}" entitled "${Paper_Title}" which you submitted to IEEE 2nd International Conference   ViTECoN- 2023  has been reviewed and accepted.      
+The comments of the referee(s) are included in the following link, You can check your revised manuscript in status section of "https://vitecon.vit.ac.in/".                                                                                                   
+Once again, thank you for submitting your manuscript to IEEE 2nd International Conference   ViTECoN- 2023  and I look forward to receiving your revision.                                                 
+          
+If you have difficulty using this site, please  mail to convenor.vitecon@vit.ac.in,  convenor.vitecon@gmail.com. 
+Thank you.`
             emails.verifyUserEmail(userchange, subject, text)
             return res.json({ status: 'ok' });
           }
