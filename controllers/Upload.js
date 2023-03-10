@@ -128,7 +128,7 @@ exports.upload_details = async (req, res) => {
         }
 
 
-        Cred_vit.updateOne({ email: user }, { $set: { Author_Name: Author_Name, Author_Type: Author_Type, Institution: Institution, Address: Address, Mobile: Mobile, IEEE_No: IEEE_No, Coauthors: Coauthors, Affiliation: Affiliation, Paper_Title: Title, Domain: Domain, pdfid: pdfnum, Waiting: 'B', Warning: 'Will be updated shortly', Revision: 'Not yet Reviewed' }, $unset: { Decision: 1 } }, err => {
+        Cred_vit.updateOne({ email: user }, { $set: { Author_Name: Author_Name, Author_Type: Author_Type, Institution: Institution, Address: Address, Mobile: Mobile, IEEE_No: IEEE_No, Coauthors: Coauthors, Affiliation: Affiliation, Paper_Title: Title, Domain: Domain, pdfid: pdfnum, Waiting: 'B', Warning: 'Under Review', Revision: 'Under Review' }, $unset: { Decision: 1 } }, err => {
           if (err) {
             console.log(err);
           }
